@@ -3,54 +3,100 @@
 #               Poylova E. (30%),
 #               Miller A. (30%)
 
-print('Введите годовой доход')
-annual_income=float(input())
+# Ignatovich D.
+# string constants
+name_month = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь']
+
+annual_income = 0
+for month in range(12):
+    print('{} {}:'.format('Укажите Ваш доход за', name_month[month], end =''))
+    income = float(input())
+    annual_income += income
+print('Ваш годовой доход =', annual_income)
+
 print('Выберите семейный статус налогоплательщика')
 print('Введите цифру нужного варианта:', '1)один субъект',
                                          '2)супружеская пара',
                                          '3)родитель-одиночка', sep='\n')
 y=int(input())
 
-#Calculating personal income tax for a single entity.
+
+# Calculation of tax rates at each stage for a subject.
+stage_1=9075*0.1
+stage_2=(36900-9076)*0.15+stage_1
+stage_3=(89350-36901)*0.25+stage_2
+stage_4=(186350-89351)*0.28+stage_3
+stage_5=(405100-186351)*0.33+stage_4
+stage_6=(406750-405101)*0.35+stage_5
+
 if y==1:
     if annual_income<=9075:
-        nalog=(annual_income)*0.1
+        tax=(annual_income)*0.1
     elif annual_income>=9076 and annual_income<=36900:
-        nalog=(annual_income-9076)*0.15+907.5
+        tax=(annual_income-9076)*0.15+stage_1
     elif annual_income>=36901 and annual_income<=89350:
-        nalog=(annual_income-36901)*0.25+5081.1
+        tax=(annual_income-36901)*0.25+stage_2
     elif annual_income>=89351 and annual_income<=186350:
-        nalog=(annual_income-89351)*0.28+18193.35
+        tax=(annual_income-89351)*0.28+stage_3
     elif annual_income>=186351 and annual_income<=405100:
-        nalog=(annual_income-186351)*0.33+45353.07
+        tax=(annual_income-186351)*0.33+stage_4
     elif annual_income>=405101 and annual_income<=406750:
-        nalog=(annual_income-405101)*0.35+117540.2
+        tax=(annual_income-405101)*0.35+stage_5
     elif annual_income>=406751:
-        nalog=(annual_income-406751)*0.396+118117.4
-    print('Размер налога которой нужно уплатить: ', round(nalog, 3))
+        tax=(annual_income-406751)*0.396+stage_6
+    print('Размер налога, который нужно уплатить: ', round(tax, 3))
+    
 
+# Miller A.
+#Calculation of tax rates at each stage for a married couple.
+stage_1=18150*0.1
+stage_2=(73801-18151)*0.15+stage_1
+stage_3=(148851-73801)*0.25+stage_2
+stage_4=(226851-148851)*0.28+stage_3
+stage_5=(405501-226851)*0.33+stage_4
+stage_6=(457601-405101)*0.35+stage_5
+
+if y==2:
+    if annual_income<=18150:
+        tax=((annual_income)*0.1)
+    elif annual_income>=18151 and annual_income<=73800:
+        tax=(stage_1+((annual_income)-18151)*0.15)
+    elif annual_income>=73801 and annual_income<=148850:
+        tax=(stage_2+((annual_income)-73801)*0.25)
+    elif annual_income>=148851 and annual_income<=226850:
+        tax=(stage_3+((annual_income)-148851)*0.28)
+    elif annual_income>=226851 and annual_income<=405100:
+        tax=(stage_4+((annual_income)-226851)*0.33)
+    elif annual_income>=405101 and annual_income<=457600:
+        tax=(stage_5+((annual_income)-405101)*0.35)
+    elif annual_income>=457601:
+        tax=(stage_6+((annual_income)-457601)*0.396)
+    print('Размер налога, который нужно уплатить: ', round(tax, 3))
+
+
+# Poylova E. 
 #Calculating personal income tax for a single parent.
 
-#Range for calculating tax rates at steps.
-r=12951
-h=float(49401-12951)
-f=float(127551-49401)
-k=float(206601-127551)
-l=float(405101-206601)
-z=float(432201-405101)
+stage_1=12951*0.1
+stage_2=(49401-12951)*0.15+stage_1
+stage_3=(127551-49401)*0.25+stage_2
+stage_4=(206601-127551)*0.28+stage_3
+stage_5=(405101-206601)*0.33+stage_4
+stage_6=(432201-405101)*0.35+stage_5
+
 if y==3:
     if annual_income<=12950:
-        nalog=((annual_income)*0.1)
+        tax=((annual_income)*0.1)
     elif annual_income>=12951 and annual_income<=49400:
-        nalog=(0.1*r+((annual_income)-12951)*0.15)
+         tax=(stage_1+((annual_income)-12951)*0.15)
     elif annual_income>=49401 and annual_income<=127550:
-        nalog=(0.1*r+0.15*h+((annual_income)-49401)*0.25)
+         tax=(stage_2+((annual_income)-49401)*0.25)
     elif annual_income>=127551 and annual_income<=206600:
-        nalog=(0.1*r+0.15*h+0.25*f+((annual_income)-127551)*0.28)
+         tax=(stage_3+((annual_income)-127551)*0.28)
     elif annual_income>=206601 and annual_income<=405100:
-        nalog=(0.1*r+0.15*h+0.25*f+0.28*k+((annual_income)-206601)*0.33)
+         tax=(stage_4+((annual_income)-206601)*0.33)
     elif annual_income>=405101 and annual_income<=432200:
-        nalog=(0.1*r+0.15*h+0.25*f+0.28*k+0.33*l+((annual_income)-405101)*0.35)
+         tax=(stage_5+((annual_income)-405101)*0.35)
     elif annual_income >=432201:
-        nalog=(0.1*r+0.15*h+0.25*f+0.28*k+0.33*l+0.35*z+((annual_income)-432201)*0.396)
-    print('Размер налога которой нужно уплатить: ', round(nalog, 3))
+         tax=(stage_6+((annual_income)-432201)*0.396)
+    print('Размер налога которой нужно уплатить: ', round(tax, 3))
